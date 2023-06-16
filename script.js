@@ -1,6 +1,7 @@
 const todolist = document.getElementById('todolist');
 const btn = document.getElementById('btn');
 const ulTag = document.getElementById('ulTag');
+var edittext = "";
 
 
 
@@ -34,14 +35,20 @@ function reanderTask(){
        deleteEle.taskId = todoArray[i].taskId;
        deleteEle.innerText = "delete";
        deleteEle.classList.add('deleteId')
-       
        deleteEle.addEventListener('click',deleteItem)
+
+       let editEle = document.createElement("button")
+       editEle.innerText = "edit";
+       editEle.taskId = todoArray[i].taskId;
+       editEle.edittext = todoArray[i].taskName;
+       editEle.addEventListener('click',editItem)
 
 
 
 
 
         ulTag.appendChild(li);
+        ulTag.appendChild(editEle);
         ulTag.appendChild(deleteEle);
 
     }
@@ -56,4 +63,14 @@ function deleteItem(e) {
    todoArray.splice(findindex,1);
    reanderTask()
     
+}
+
+function editItem(e){
+    e.preventDefault();
+    var editelemrnt = todoArray.findIndex(i => i.taskId === e.target.taskId);
+    todoArray.splice(editelemrnt,1);
+    todolist.value = e.target.edittext;
+    reanderTask()
+
+
 }
